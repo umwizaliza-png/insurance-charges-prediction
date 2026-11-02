@@ -405,28 +405,29 @@ if submitted:
     }])
 
     # Apply One-Hot Encoding using the original dataset categories
-combined_input = pd.concat(
-    [df.drop(columns=["charges"]), new_person],
-    ignore_index=True
-)
+    combined_input = pd.concat(
+        [df.drop(columns=["charges"]), new_person],
+        ignore_index=True
+    )
 
-combined_encoded = pd.get_dummies(
-    combined_input,
-    columns=["sex", "smoker", "region"],
-    drop_first=True,
-    dtype=int
-)
+    combined_encoded = pd.get_dummies(
+        combined_input,
+        columns=["sex", "smoker", "region"],
+        drop_first=True,
+        dtype=int
+    )
 
-# Extract the new user's encoded record
-new_person_encoded = combined_encoded.tail(1)
+    # Extract the new user's encoded record
+    new_person_encoded = combined_encoded.tail(1)
 
-# Match the exact training feature columns
-new_person_encoded = new_person_encoded.reindex(
-    columns=X.columns,
-    fill_value=0
-)
+    # Match the exact training feature columns
+    new_person_encoded = new_person_encoded.reindex(
+        columns=X.columns,
+        fill_value=0
+    )
 
-predicted_charge = model.predict(
+    # Generate prediction
+    predicted_charge = model.predict(
         new_person_encoded
     )[0]
 
