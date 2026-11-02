@@ -426,7 +426,7 @@ new_person_encoded = new_person_encoded.reindex(
     fill_value=0
 )
 
-    predicted_charge = model.predict(
+predicted_charge = model.predict(
         new_person_encoded
     )[0]
 
